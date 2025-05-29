@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #map {
+            flex: 1;
+        }
+        #route-info {
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+            color: #000;
+            padding: 12px 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #0066ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="route-info">
+            <div><span class="highlight">Start:</span> Cochin Port, India (9.9312°N, 76.2673°E)</div>
+            <div><span class="highlight">End:</span> Colombo Port, Sri Lanka (6.9344°N, 79.8428°E)</div>
+            <div><span class="highlight">Distance:</span> Approx. 500 nautical miles</div>
+           
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([9.7, 77.5], 6);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add nautical chart overlay
+        L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+            attribution: 'Sea chart data © OpenSeaMap'
+        }).addTo(map);
+
+        // Route coordinates avoiding land
+        const routeCoordinates = [
+            [9.9312, 76.2673],  // Cochin
+            [9.0, 76.0],
+            [7.5, 77.5],
+            [6.9344, 79.8428]   // Colombo
+        ];
+
+        // Draw route
+        const route = L.polyline(routeCoordinates, {
+            color: '#0066ff',
+            weight: 4,
+            opacity: 0.8,
+            smoothFactor: 1
+        }).addTo(map);
+
+        // White location icon
+        const locationIcon = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32]
+        });
+
+        // Markers
+        L.marker([9.9312, 76.2673], {icon: locationIcon}).addTo(map)
+            .bindPopup('Cochin Port');
+
+        L.marker([6.9344, 79.8428], {icon: locationIcon}).addTo(map)
+            .bindPopup('Colombo Port');
+
+        // Fit map to route
+        map.fitBounds(route.getBounds(), { padding: [50, 50] });
+
+        // Add scale
+        L.control.scale({ metric: true, imperial: false }).addTo(map);
+    </script>
+</body>
+</html>

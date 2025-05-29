@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Route Prediction</title>
+    <link rel="stylesheet" href="stt.css">
+    <script>
+        // Define valid port pairs with distance and destination page
+        const routes = {
+            "Chennai Port-Colombo Port": { distance: 743, page: "map_chennai_colombo.html" },
+            "Chennai Port-Kankesanthurai Port": { distance: 426, page: "map_chennai_kankesan.html" },
+            "Tuticorin Port-Colombo Port": { distance: 510, page: "map_tuticorin_colombo.html" },
+            "Cochin Port-Colombo Port": { distance: 613, page: "map_cochin_colombo.html" },
+            "Kakinada Port-Kankesanthurai Port": { distance: 952, page: "map_kakinada_kankesan.html" },
+            "Kakinada Port-Colombo Port": { distance: 1139, page: "map_kakinada_colombo.html" },
+            "Visakhapatnam Port-Kankesanthurai Port": { distance: 1512, page: "map_visak_kankesan.html" },
+            "Nagapattinam Port-Kankesanthurai Port": { distance: 508, page: "map_nagapattinam_kankesan.html" }
+        };
+
+        function updateDistance() {
+            const origin = document.getElementById("origin").value;
+            const destination = document.getElementById("destination").value;
+            const key = `${origin}-${destination}`;
+            const distanceField = document.getElementById("distance");
+
+            if (routes[key]) {
+                distanceField.value = routes[key].distance;
+            } else {
+                distanceField.value = "";
+            }
+        }
+
+        function redirectToNextPage(event) {
+            event.preventDefault();
+
+            const origin = document.getElementById("origin").value;
+            const destination = document.getElementById("destination").value;
+            const fuel = document.getElementById("fuel_consumption").value;
+            const weather = document.getElementById("weather_condition").value;
+            const distance = document.getElementById("distance").value;
+
+            const key = `${origin}-${destination}`;
+
+            if (routes[key] && fuel && weather && distance) {
+                const page = routes[key].page;
+                const url = `${page}?origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&distance=${encodeURIComponent(distance)}&fuel=${encodeURIComponent(fuel)}&weather=${encodeURIComponent(weather)}`;
+                window.location.href = url;
+            } else {
+                alert("Please fill in all fields with a valid port pair.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="route-box">
+        <h1>Ship Route Prediction</h1>
+        <form id="routeForm" onsubmit="redirectToNextPage(event)">
+            <label for="origin">Origin Port</label>
+            <select id="origin" name="origin" required onchange="updateDistance()">
+                <option value="">Select Origin Port</option>
+                <option value="Chennai Port">Chennai Port</option>
+                <option value="Tuticorin Port">Tuticorin Port</option>
+                <option value="Cochin Port">Cochin Port</option>
+                <option value="Kakinada Port">Kakinada Port</option>
+                <option value="Visakhapatnam Port">Visakhapatnam Port</option>
+                <option value="Nagapattinam Port">Nagapattinam Port</option>
+            </select>
+
+            <label for="destination">Destination Port</label>
+            <select id="destination" name="destination" required onchange="updateDistance()">
+                <option value="">Select Destination Port</option>
+                <option value="Colombo Port">Colombo Port</option>
+                <option value="Kankesanthurai Port">Kankesanthurai Port</option>
+            </select>
+
+            <label for="distance">Distance (km)</label>
+            <input type="number" id="distance" name="distance" readonly required>
+
+            <label for="fuel_consumption">Fuel Consumption (liters)</label>
+            <input type="number" id="fuel_consumption" name="fuel_consumption" placeholder="Enter Fuel Consumption" required>
+
+            <label for="weather_condition">Weather Condition</label>
+            <select id="weather_condition" name="weather_condition" required>
+                <option value="">Select Weather</option>
+                <option value="Sunny">Sunny</option>
+                <option value="Rainy">Rainy</option>
+                <option value="Cloudy">Cloudy</option>
+                <option value="Windy">Windy</option>
+                <option value="Stormy">Stormy</option>
+                <option value="Humid">Humid</option>
+                <option value="Foggy">Foggy</option>
+            </select>
+
+            <input type="submit" value="Predict Route">
+        </form>
+    </div>
+
+</body>
+</html>

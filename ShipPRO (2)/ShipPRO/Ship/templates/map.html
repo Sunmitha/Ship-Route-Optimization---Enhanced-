@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chennai to KKS Sea Route</title>
+    <!-- Load PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <!-- Load Folium for maps -->
+    <py-config>
+        packages = ["folium", "branca"]
+    </py-config>
+</head>
+<body>
+    <h1>Chennai to Kankesanthurai (KKS) Sea Route</h1>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+
+    <py-script>
+        import folium
+
+        # Coordinates
+        chennai = [13.0833, 80.2833]  # Chennai Port
+        kks = [9.8167, 80.0500]       # Kankesanthurai Port
+
+        # Waypoints (approximate)
+        waypoints = [
+            [12.5000, 80.2000],  # Off Chennai coast
+            [10.0000, 80.3000],  # Bay of Bengal
+            [9.5000, 79.8000],   # Palk Strait entry
+            kks
+        ]
+
+        # Create map
+        m = folium.Map(
+            location=[11, 80],  # Center on Palk Strait
+            zoom_start=7,
+            tiles="OpenStreetMap"
+        )
+
+        # Add markers
+        folium.Marker(
+            chennai, 
+            popup="<b>Chennai Port</b>", 
+            icon=folium.Icon(color="blue")
+        ).add_to(m)
+
+        folium.Marker(
+            kks, 
+            popup="<b>Kankesanthurai Port (KKS)</b>", 
+            icon=folium.Icon(color="red")
+        ).add_to(m)
+
+        # Draw route
+        folium.PolyLine(
+            locations=[chennai] + waypoints,
+            color="navy",
+            weight=5,
+            opacity=0.7,
+            tooltip="Chennai → KKS Sea Route"
+        ).add_to(m)
+
+        # Display map in HTML
+        display(m, target="map")
+    </py-script>
+</body>
+</html>

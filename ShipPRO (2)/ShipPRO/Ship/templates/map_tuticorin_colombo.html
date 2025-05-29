@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sea Route: Tuticorin to Colombo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #map {
+            flex: 1;
+        }
+        #header {
+            background: #1a4b8c;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        #info {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+            padding: 12px 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+        .route-info {
+            margin: 5px 0;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #1a4b8c;
+        }
+    </style>
+</head>
+<body>
+    <div id="map-container">
+        
+        <div id="map"></div>
+        <div id="info">
+            <div class="route-info"><span class="highlight">Start:</span> Tuticorin (Thoothukudi), India (8.7642°N, 78.1348°E)</div>
+            <div class="route-info"><span class="highlight">End:</span> Colombo, Sri Lanka (6.9271°N, 79.8612°E)</div>
+            <div class="route-info"><span class="highlight">Distance:</span> Approx. 120 nautical miles</div>
+            <div class="route-info"><span class="highlight">Estimated Sailing Time:</span> ~11-12 hours at 10 knots</div>
+           
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([8.0, 79.0], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add nautical chart layer
+        L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenSeaMap contributors'
+        }).addTo(map);
+
+        // Define a curvy route from Tuticorin to Colombo (avoid land)
+        var routeCoordinates = [
+            [8.7642, 78.1348],  // Tuticorin
+            [8.3, 78.9],        // Slight curve
+            [7.7, 79.5],        // Mid-sea curve
+            [6.9271, 79.8612]   // Colombo
+        ];
+
+        var route = L.polyline(routeCoordinates, {
+            color: 'blue',
+            weight: 3,
+            opacity: 0.7,
+            dashArray: '5, 5'
+        }).addTo(map);
+
+        L.marker([8.7642, 78.1348]).addTo(map)
+            .bindPopup("<b>Tuticorin Port</b><br>A major seaport on the southeastern coast of India known for maritime trade and fishing.")
+            .openPopup();
+
+        L.marker([6.9271, 79.8612]).addTo(map)
+            .bindPopup("<b>Colombo Port</b><br>The largest and busiest port in Sri Lanka, serving as a gateway to South Asia.");
+
+        map.fitBounds(route.getBounds(), { padding: [50, 50] });
+
+        L.control.scale({ imperial: false }).addTo(map);
+    </script>
+</body>
+</html>

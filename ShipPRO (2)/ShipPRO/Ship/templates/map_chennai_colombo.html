@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sea Route: Chennai to Colombo</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    #map-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    #header {
+      background: #003366;
+      color: white;
+      padding: 12px 20px;
+      text-align: center;
+    }
+    #map {
+      flex: 1;
+    }
+    #info {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+      padding: 12px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+    }
+    .highlight {
+      font-weight: bold;
+      color: #003366;
+    }
+  </style>
+</head>
+<body>
+  <div id="map-container">
+    
+    <div id="map"></div>
+    <div id="info">
+      <div><span class="highlight">Start:</span> Chennai, India (13.0827°N, 80.2707°E)</div>
+      <div><span class="highlight">End:</span> Colombo, Sri Lanka (6.9271°N, 79.8612°E)</div>
+      <div><span class="highlight">Distance:</span> Approx. 500 nautical miles</div>
+      <div><span class="highlight">Estimated Sailing Time:</span> ~50 hours at 10 knots</div>
+     
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([10, 80.5], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const chennai = [13.0827, 80.2707];
+    const colombo = [6.9271, 79.8612];
+
+    const seaRoute = [
+      [13.0827, 80.2707],
+      [13.6, 80.4],
+      [13.8, 80.7],
+      [14.0, 81.0],
+      [14.2, 81.2],
+      [14.4, 81.3],
+      [14.5, 81.4],
+      [14.3, 81.6],
+      [14.0, 81.7],
+      [13.5, 81.6],
+      [13.2, 81.2],
+      [13.0, 80.9],
+      [12.5, 80.7],
+      [12.0, 80.4],
+      [11.0, 80.2],
+      [10.5, 80.0],
+      [10.0, 79.5],
+      [9.5, 79.3],
+      [6.9271, 79.8612]
+    ];
+
+    const polyline = L.polyline(seaRoute, {
+      color: 'blue',
+      weight: 4,
+      opacity: 0.8,
+      dashArray: '5, 10'
+    }).addTo(map);
+
+    L.marker(chennai).addTo(map)
+      .bindPopup("<b>Chennai Port</b><br>Start Point").openPopup();
+
+    L.marker(colombo).addTo(map)
+      .bindPopup("<b>Colombo Port</b><br>End Point");
+
+    map.fitBounds(polyline.getBounds(), { padding: [40, 40] });
+  </script>
+</body>
+</html>
