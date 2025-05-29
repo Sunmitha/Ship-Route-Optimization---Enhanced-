@@ -1,15 +1,15 @@
-# 🚢 Ship Route Optimization and Visualization System
+# Ship Route Optimization and Visualization System
 
 A **Flask-based web application** designed to optimize and visualize ship routes between **India and Sri Lanka**, enhancing **fuel efficiency**, **safety**, and **voyage comfort**. It uses **machine learning** and **maritime data** to generate **weather-aware, sea-only paths** displayed on an interactive map.
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
-### 🔐 Login/Signup System
+### Login/Signup System
 Secure user authentication for accessing route services.
 
-### 📍 Smart Port-to-Port Navigation
+### Smart Port-to-Port Navigation
 Predicts optimal sea routes between major ports:
 - Chennai
 - Cochin
@@ -18,26 +18,26 @@ Predicts optimal sea routes between major ports:
 - Colombo
 - Kankesanthurai
 
-### 🧠 ML-Powered Route Prediction
+### ML-Powered Route Prediction
 - Decision Tree and Random Forest algorithms.
 - Trained on maritime and weather datasets.
 
-### 🗺️ Interactive Route Visualization
+### Interactive Route Visualization
 - Real-time sea-only paths.
 - Powered by **Leaflet.js** and **Folium**.
 - Routes intelligently avoid landmass.
 
-### 🌦️ Dynamic Weather Simulation
+### Dynamic Weather Simulation
 - Weather-aware routing (e.g., 'rainy', 'cloudy').
 - Routes adapt visually based on input conditions.
 
-### 🧭 Step-by-Step Sailing Instructions
+### Step-by-Step Sailing Instructions
 - Easy-to-understand textual instructions for navigation.
 - Complements visual map data.
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 ### Frontend
 - HTML
