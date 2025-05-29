@@ -2,7 +2,6 @@
 
 A **Flask-based web application** designed to optimize and visualize ship routes between **India and Sri Lanka**, enhancing **fuel efficiency**, **safety**, and **voyage comfort**. It uses **machine learning** and **maritime data** to generate **weather-aware, sea-only paths** displayed on an interactive map.
 
----
 
 ## Key Features
 
@@ -35,7 +34,6 @@ Predicts optimal sea routes between major ports:
 - Easy-to-understand textual instructions for navigation.
 - Complements visual map data.
 
----
 
 ## Technologies Used
 
